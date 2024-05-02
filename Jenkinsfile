@@ -75,6 +75,6 @@ pipeline {
 def emailNotification(stageName, status) {
     emailext body: "Stage ${stageName} ${status}",
         subject: "Pipeline ${status.capitalize()}: ${stageName}",
-        to: 'recipient@example.com',
+        to: 's223264153@deakin.edu.au',
         attachmentsPattern: 'logs/*.txt'
 }
