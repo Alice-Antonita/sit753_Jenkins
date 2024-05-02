@@ -1,80 +1,127 @@
 pipeline {
     agent any
-
+    
     stages {
         stage('Build') {
             steps {
-                // Placeholder step for build
-                echo 'Building the code...'
+                // Use Maven to build the code
+                sh 'mvn clean package'
+            }
+            post {
+                success {
+                    echo 'Build successful'
+                }
+                failure {
+                    echo 'Build failed'
+                }
             }
         }
+        
         stage('Unit and Integration Tests') {
             steps {
-                // Placeholder step for unit tests
-                echo 'Running unit tests...'
-                // Placeholder step for integration tests
-                echo 'Running integration tests...'
+                // Run unit tests
+                sh 'mvn test'
+                
+                // Run integration tests
+                // Use a test automation tool like Selenium or JUnit
+                sh 'mvn integration-test'
             }
             post {
                 success {
-                    emailNotification('Unit and Integration Tests', 'success')
+                    echo 'Tests passed successfully'
                 }
                 failure {
-                    emailNotification('Unit and Integration Tests', 'failure')
+                    echo 'Tests failed'
                 }
             }
         }
+        
         stage('Code Analysis') {
             steps {
-                // Placeholder step for code
-                echo 'Analyzing code...'
-            }
-        }
-        stage('Security Scan') {
-            steps {
-                // Placeholder step for  
-                echo 'Scanning for security vulnerabilities...'
+                // Integrate a code analysis tool like SonarQube
+                // Execute code analysis
+                sh 'sonar-scanner'
             }
             post {
                 success {
-                    emailNotification('Security Scan', 'success')
+                    echo 'Code analysis passed'
                 }
                 failure {
-                    emailNotification('Security Scan', 'failure')
+                    echo 'Code analysis failed'
                 }
             }
         }
+        
+        stage('Security Scan') {
+            steps {
+                // Perform security scan using a tool like OWASP ZAP
+                sh 'zap-cli --zap-url <your_application_url> --spider --full-scan'
+            }
+            post {
+                success {
+                    echo 'Security scan passed'
+                }
+                failure {
+                    echo 'Security scan failed'
+                }
+            }
+        }
+        
         stage('Deploy to Staging') {
             steps {
-                // Placeholder step for deployment to staging
-                echo 'Deploying to staging server...'
+                // Deploy to staging server using deployment tool like AWS CLI
+                sh 'aws deploy <staging_server_details>'
+            }
+            post {
+                success {
+                    echo 'Deployment to staging successful'
+                }
+                failure {
+                    echo 'Deployment to staging failed'
+                }
             }
         }
+        
         stage('Integration Tests on Staging') {
             steps {
-                // Placeholder step for integration tests on staging
-                echo 'Running integration tests on staging...'
+                // Run integration tests on staging environment
+                sh 'mvn integration-test -Dstaging=true'
+            }
+            post {
+                success {
+                    echo 'Integration tests on staging passed'
+                }
+                failure {
+                    echo 'Integration tests on staging failed'
+                }
             }
         }
+        
         stage('Deploy to Production') {
             steps {
-                // Placeholder step for deployment to production
-                echo 'Deploying to production server...'
+                // Deploy to production server using deployment tool like AWS CLI
+                sh 'aws deploy <production_server_details>'
+            }
+            post {
+                success {
+                    echo 'Deployment to production successful'
+                }
+                failure {
+                    echo 'Deployment to production failed'
+                }
             }
         }
     }
-
+    
     post {
         always {
-            // Archive the logs
-            archiveArtifacts artifacts: 'logs/*.txt', allowEmptyArchive: true
+            // Send notification email at the end of test and security scan stages
+            emailext(
+                subject: "Pipeline Status: ${currentBuild.result}",
+                body: "Pipeline execution ${currentBuild.result}: ${env.BUILD_URL}",
+                to: "aliceantonita@deakin.edu.au",
+                attachLog: true
+            )
         }
     }
-}
-
-def emailNotification(stageName, status) {
-    emailext body: "Stage ${stageName} ${status}",
-        subject: "Pipeline ${status.capitalize()}: ${stageName}",
-        to: 'aliceantonita@deakin.edu.au',
-        attachmentsPattern: 'logs/*.txt'
 }
