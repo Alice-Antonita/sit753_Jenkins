@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Security Scan') {
             steps {
-                // Placeholder step for security 
+                // Placeholder step for  
                 echo 'Scanning for security vulnerabilities...'
             }
             post {
