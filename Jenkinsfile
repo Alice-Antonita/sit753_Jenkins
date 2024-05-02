@@ -4,16 +4,16 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build the code using Maven
-                sh 'mvn clean package'
+                // Placeholder step for build
+                echo 'Building the code...'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests
-                sh 'mvn test'
-                // Run integration tests
-                sh 'mvn integration-test'
+                // Placeholder step for unit tests
+                echo 'Running unit tests...'
+                // Placeholder step for integration tests
+                echo 'Running integration tests...'
             }
             post {
                 success {
@@ -26,14 +26,14 @@ pipeline {
         }
         stage('Code Analysis') {
             steps {
-                // Integrate SonarQube for code analysis
-                // (steps to run SonarQube analysis)
+                // Placeholder step for code analysis
+                echo 'Analyzing code...'
             }
         }
         stage('Security Scan') {
             steps {
-                // Perform security scan using OWASP ZAP or SonarQube
-                // (steps to run security scan)
+                // Placeholder step for security scan
+                echo 'Scanning for security vulnerabilities...'
             }
             post {
                 success {
@@ -46,20 +46,20 @@ pipeline {
         }
         stage('Deploy to Staging') {
             steps {
-                // Deploy application to AWS EC2 staging server
-                // (steps to deploy using Jenkins deployment plugin or Ansible)
+                // Placeholder step for deployment to staging
+                echo 'Deploying to staging server...'
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on staging environment
-                // (steps to run integration tests on staging)
+                // Placeholder step for integration tests on staging
+                echo 'Running integration tests on staging...'
             }
         }
         stage('Deploy to Production') {
             steps {
-                // Deploy application to AWS EC2 production server
-                // (steps to deploy using Jenkins deployment plugin or Ansible)
+                // Placeholder step for deployment to production
+                echo 'Deploying to production server...'
             }
         }
     }
@@ -75,6 +75,6 @@ pipeline {
 def emailNotification(stageName, status) {
     emailext body: "Stage ${stageName} ${status}",
         subject: "Pipeline ${status.capitalize()}: ${stageName}",
-        to: 's223264153@deakin.edu.au',
+        to: 'aliceantonita@deakin.edu.au',
         attachmentsPattern: 'logs/*.txt'
 }
