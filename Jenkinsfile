@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Code Analysis') {
             steps {
-                // Placeholder step for code analysis
+                // Placeholder step for code
                 echo 'Analyzing code...'
             }
         }
