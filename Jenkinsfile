@@ -18,8 +18,7 @@ pipeline {
             post {
                 success {
                     echo "Sending email notification."
-                    emailext attachLog: true, // Attach build log
-                        to: "aliceantonita@gmail.com",
+                        mail to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Unit and Integration Tests | Success",
                         body: "Unit and integration tests completed with status: Success. Check attached logs for details."
                 }
@@ -41,8 +40,7 @@ pipeline {
             post {
                 success {
                     echo "Sending email notification."
-                    emailext attachLog: true, // Attach build log
-                        to: "aliceantonita@gmail.com",
+                        mail to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Security Scan | Success",
                         body: "Security scan completed with status: Success. Check attached logs for details."
                 }
