@@ -20,7 +20,7 @@ pipeline {
                         mail to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Security Scan Stage",
                         body: "Security Scan stage completed. Check attached logs for details.",
-                        attachLog: true
+                        attachments: true
                     }
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
                         mail to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Security Scan Stage",
                         body: "Security Scan stage completed. Check attached logs for details.",
-                        attachLog: true
+                        attachments: true
                     }
                 }
             }
