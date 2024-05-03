@@ -4,65 +4,75 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "mvn clean package"
+                echo "Building the code using Maven."
+                // shell or script step to use Maven
+                // sh <<call a exceutable file>> 
             }
         }
-
         stage('Unit and Integration Tests') {
             steps {
-                echo "Unit and Integration Tests"
+                echo "Running unit and integration tests using <<tools to use>>"
+                // shell or script step for running tests
+                // sh <<call a exceutable file>>
             }
-        }
-
+            post {
+                success {
+                        mail to: "aliceantonita@gmail.com"
+                        subject: "Jenkins Pipeline Notification: Security Scan Stage",
+                        body: "Security Scan stage completed. Check attached logs for details.",
+                        attachLog: true
+                    }
+                }
+            }
+        
         stage('Code Analysis') {
             steps {
-                echo "sonar-scanner"
+                echo "Analyzing code with SonarQube."
+                // Example: SonarQube scanner step
+                // sh <<call a exceutable file>>
             }
         }
-
         stage('Security Scan') {
             steps {
-                echo "Perform security scan using a tool like OWASP ZAP"
+                echo "Performing security scan using <<write a tool>>"
+                // Example: security scan script or tool command
+                // sh <<call a exceutable file>>
             }
             post {
-                success {
-                    echo 'Integration tests on staging passed'
+                    success {
+                        mail to: "aliceantonita@gmail.com"
+                        subject: "Jenkins Pipeline Notification: Security Scan Stage",
+                        body: "Security Scan stage completed. Check attached logs for details.",
+                        attachLog: true
+                    }
                 }
             }
-        }
-
+        
         stage('Deploy to Staging') {
             steps {
-                echo "Deploying the application to a testing environment specified by the environment variable: ${env.TESTING_ENVIRONMENT}"
+                echo "Deploying to AWS EC2 staging server."
+                // Example: Deployment script or tool command
+               // sh <<call a exceutable file>>
             }
         }
-
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Run integration tests on staging environment'
-            }
-            post {
-                success {
-                    echo 'Integration tests on staging passed'
-                }
+                echo "Running integration tests on the staging server."
+                // Example: Integration test script or tool command
+                // sh <<call a exceutable file>>
             }
         }
-
         stage('Deploy to Production') {
             steps {
-                echo "Deploying the code to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
+                echo "Deploying to AWS EC2 production server."
+                // Example: Deployment script or tool command
+                // sh <<call a exceutable file>>
             }
         }
     }
-        post {
-            always {
-                // Send notification email at the end of test and security scan stages
-                emailext(
-                    subject: "Pipeline Status: ${currentBuild.result}",
-                    body: "Pipeline execution ${currentBuild.result}: ${env.BUILD_URL}",
-                    to: "aliceantonita@gmail.com",
-                    attachLog: true
-                )
-            }
+    post {
+        always {
+            echo "Cleaning up after the pipeline execution."
         }
+    }
 }
