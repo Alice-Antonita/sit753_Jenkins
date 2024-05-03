@@ -70,7 +70,7 @@ pipeline {
     }
     post {
         always {
-            echo "Cleaning up after the pipeline execution."
+            echo "Cleaning up after the pipeline execution!!"
         }
     }
 }
