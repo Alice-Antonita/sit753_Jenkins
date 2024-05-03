@@ -16,9 +16,11 @@ pipeline {
                 // Example: sh 'mvn test'
             }
             post {
-                success {
+                always {
                     echo "Sending email notification."
-                        mail to: "aliceantonita@gmail.com",
+                    emailext attachLog: true,
+                        attachmentsPattern: '**/logs/*.txt', // Attach log files
+                        to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Unit and Integration Tests | Success",
                         body: "Unit and integration tests completed with status: Success. Check attached logs for details."
                 }
@@ -38,9 +40,11 @@ pipeline {
                 // Example: sh 'zap-cli -r report.html -t http://example.com'
             }
             post {
-                success {
+                always {
                     echo "Sending email notification."
-                        mail to: "aliceantonita@gmail.com",
+                    emailext attachLog: true,
+                        attachmentsPattern: '**/logs/*.txt', // Attach log files
+                        to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Security Scan | Success",
                         body: "Security scan completed with status: Success. Check attached logs for details."
                 }
