@@ -18,7 +18,7 @@ pipeline {
             post {
                 always {
                         emailext attachLog: true, attachmentsPattern: 'logs.txt',
-                        recipientProviders: "aliceantonita@gmail.com",
+                        to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Security Scan Stage",
                         body: "Security Scan stage completed. Check attached logs for details."
                     }
@@ -41,7 +41,7 @@ pipeline {
             post {
                     always {
                         emailext attachLog: true, attachmentsPattern: 'logs.txt',
-                        recipientProviders: "aliceantonita@gmail.com",
+                        to: "aliceantonita@gmail.com",
                         subject: "Jenkins Pipeline Notification: Security Scan Stage",
                         body: "Security Scan stage completed. Check attached logs for details."
                     }
