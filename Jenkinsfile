@@ -53,7 +53,7 @@ pipeline {
                 echo "Deploying the code to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
             }
         }
-
+    }
         post {
             always {
                 // Send notification email at the end of test and security scan stages
@@ -65,5 +65,4 @@ pipeline {
                 )
             }
         }
-    }
 }
